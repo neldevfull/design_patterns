@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class ISS(object):
 
     def calc(self, budget):

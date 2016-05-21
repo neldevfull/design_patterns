@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Budget(object):
 
     def __init__(self, value):

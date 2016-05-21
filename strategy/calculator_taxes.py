@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from taxes import ISS, ICMS
 
 
