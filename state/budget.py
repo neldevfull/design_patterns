@@ -14,12 +14,12 @@ class Status(object):
 
 class InApproval(Status):
     def apply_discount_extra(self, budget):
-        budget.__discount_extra += budget.value * .02
+        budget.add_discounts_extra(budget.value * .02)
 
 
 class Approved(Status):
     def apply_discount_extra(self, budget):
-            budget.__discount_extra += budget.value * .05
+        budget.add_discounts_extra(budget.value * .05)
 
 
 class Disaproved(Status):
@@ -34,17 +34,17 @@ class Finalized(Status):
 
 class Budget(object):
 
-    # Status
-    IN_APPROVAL = 1
-    APPROVED    = 2
-    DISAPPROVED = 3
-    FINALIZED   = 4
-
     def __init__(self, name):
         self.__name           = name
         self.__items          = []
-        self.status           = Budget.IN_APPROVAL
+        self.status           = InApproval()
         self.__discount_extra = 0
+
+    def apply_discounts_extra(self, discount):
+        self.status.apply_discount_extra(self)
+
+    def add_discounts_extra(self, discount):
+        return self.__discount_extra += discount
 
     @property
     def value(self):
