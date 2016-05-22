@@ -1,4 +1,37 @@
 # -*- coding: utf-8 -*-
+from abc import ABCMeta, abstractmethod
+
+
+# Magic attribute
+class Status(object):
+    # Magic attribute
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def apply_discount_extra(self, budget):
+        pass
+
+
+class InApproval(Status):
+    def apply_discount_extra(self, budget):
+        budget.__discount_extra += budget.value * .02
+
+
+class Approved(Status):
+    def apply_discount_extra(self, budget):
+            budget.__discount_extra += budget.value * .05
+
+
+class Disaproved(Status):
+    def apply_discount_extra(self, budget):
+        raise Exception('Budget disapproved.You do not receive extra discount')
+
+
+class Finalized(Status):
+    def apply_discount_extra(self, budget):
+        raise Exception('Budget finalized.You do not receive extra discount')
+
+
 class Budget(object):
 
     # Status
@@ -12,16 +45,6 @@ class Budget(object):
         self.__items          = []
         self.status           = Budget.IN_APPROVAL
         self.__discount_extra = 0
-
-    def apply_discount_extra(self):
-        if self.status == Budget.IN_APPROVAL:
-            self.__discount_extra += self.value * .02
-        elif self.status == Budget.APPROVED:
-            self.__discount_extra += self.value * .05
-        elif self.status == Budget.DISAPPROVED:
-            raise Exception('Budget disapproved.You do not receive extra discount')
-        elif self.status == Budget.FINALIZED:
-            raise Exception('Budget finalized.You do not receive extra discount')
 
     @property
     def value(self):
