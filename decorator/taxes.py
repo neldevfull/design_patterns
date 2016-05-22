@@ -43,8 +43,17 @@ class TemplateTaxes(Taxes):
         pass
 
 
+# Method for making decorator
+def IPVX(method):
+    def wrapper(self, budget):
+        return method(self, budget) + 50.00
+
+    return wrapper
+
+
 class ISS(Taxes):
 
+    @IPVX
     def calc(self, budget):
         return budget.value * .1 + self.calc_other_taxes(budget)
 
